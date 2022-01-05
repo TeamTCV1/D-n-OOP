@@ -102,5 +102,30 @@ public class DiemSEV {
         }
         return null;
     }
+    
+    public List<Bangdiem> getFindbangdiem(int id) {
+        List<Bangdiem> bangdiems = new ArrayList<Bangdiem>();
+        Connection con = JDBCConnection.getJDBCConnection();
+        String sql = "SELECT * FROM du_lieu.bang_diem where id = ?";
+        try {
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                Bangdiem bangdiem = new Bangdiem();
+                bangdiem.setId(rs.getInt("ID"));
+                bangdiem.setHvt(rs.getString("Họ và tên"));
+                bangdiem.setMon1(rs.getString("Môn 1"));
+                bangdiem.setMon2(rs.getString("Môn 2"));
+                bangdiem.setMon3(rs.getString("Môn 3"));
+                
+                bangdiems.add(bangdiem);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bangdiems;
+    }
 
 }
